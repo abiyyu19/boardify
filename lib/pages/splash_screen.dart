@@ -1,6 +1,4 @@
-import 'package:boardify/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/constant.dart';
@@ -30,7 +28,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: SvgPicture.asset('assets/boardify_logo.svg')),
+      body: Center(child: SvgPicture.asset('assets/svg/boardify_logo.svg')),
     );
   }
 }

@@ -1,9 +1,8 @@
-import 'package:boardify/pages/home_page.dart';
-import 'package:boardify/pages/onboarding_page.dart';
-import 'package:boardify/pages/signin_page.dart';
-import 'package:boardify/pages/signup_page.dart';
+import 'package:boardify/pages/home/home_page.dart';
+import 'package:boardify/pages/onboarding/onboarding_page.dart';
+import 'package:boardify/pages/login/signin_page.dart';
+import 'package:boardify/pages/register/signup_page.dart';
 import 'package:boardify/pages/splash_screen.dart';
-import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
