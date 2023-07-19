@@ -1,3 +1,4 @@
+import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,7 +13,10 @@ class HeaderOnboarding extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Icon
-        SvgPicture.asset('assets/svg/boardify_logo.svg'),
+        SvgPicture.asset(
+          'assets/svg/boardify_blue.svg',
+          width: MediaQuery.of(context).size.width * 0.3,
+        ),
 
         // Image
         SvgPicture.asset(
@@ -20,12 +24,14 @@ class HeaderOnboarding extends StatelessWidget {
           height: 300,
         ),
 
+        smallGap,
+
         // Text
         const Text(
           "Unlocking Success Through\nEffective Project\nManagement",
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 15,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),

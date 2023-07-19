@@ -1,6 +1,5 @@
 import 'package:boardify/pages/login/handle_login.dart';
 import 'package:boardify/pages/login/header_login.dart';
-import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:boardify/widgets/custom_button.dart';
 import 'package:boardify/widgets/custom_textformfield.dart';
@@ -29,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         leading: const BackButton(
           color: Colors.black,
         ),
-        backgroundColor: Colors.white38,
+        backgroundColor: Colors.white,
       ),
       body: Form(
         onChanged: () {
@@ -39,8 +38,6 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
-            largeGap,
-
             const HeaderLogin(),
 
             smallGap,

@@ -14,12 +14,12 @@ class HeaderRegister extends StatelessWidget {
         // Logo
         Center(
           child: SvgPicture.asset(
-            'assets/svg/boardify_logo.svg',
-            width: MediaQuery.of(context).size.width * 0.75,
+            'assets/svg/boardify_blue.svg',
+            width: MediaQuery.of(context).size.width * 0.5,
           ),
         ),
 
-        smallGap,
+        largeGap,
 
         // Text
         const Text(

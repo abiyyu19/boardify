@@ -1,10 +1,8 @@
 import 'package:boardify/pages/register/header_register.dart';
-import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:boardify/widgets/custom_button.dart';
 import 'package:boardify/widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'handle_register.dart';
 
@@ -35,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
         leading: const BackButton(
           color: Colors.black,
         ),
-        backgroundColor: Colors.white38,
+        backgroundColor: Colors.white,
       ),
       body: Form(
         onChanged: () {
@@ -45,8 +43,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
-            largeGap,
-
             const HeaderRegister(),
 
             smallGap,

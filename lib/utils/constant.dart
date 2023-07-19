@@ -20,7 +20,8 @@ abstract class Constants {
 }
 
 // Colors
-const mainBlue = Color(0xFF2B65F6);
+const mainBlue = Color(0xFF1DA1F2);
+const grayUhuy = Color(0xFF919191);
 
 // Small Gap
 const smallGap = SizedBox(

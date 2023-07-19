@@ -25,6 +25,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             const HeaderOnboarding(),
 
             largeGap,
+            largeGap,
+            smallGap,
 
             // Sign Up Button
             CustomButton(
@@ -44,7 +46,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               onPressed: () => {
                 Navigator.pushNamed(context, '/login'),
               },
-              textColor: Colors.black,
+              textColor: mainBlue,
             ),
           ],
         ),

@@ -4,7 +4,6 @@ import 'package:boardify/pages/onboarding/onboarding_page.dart';
 import 'package:boardify/pages/login/login_page.dart';
 import 'package:boardify/pages/register/register_page.dart';
 import 'package:boardify/pages/splash_screen.dart';
-import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,13 +29,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.white38,
+        statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
       ),
       child: MaterialApp(
         theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
           textTheme:
-              GoogleFonts.lexendZettaTextTheme(Theme.of(context).textTheme),
+              GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
         ),
         debugShowCheckedModeBanner: false,
         title: 'Boardify',

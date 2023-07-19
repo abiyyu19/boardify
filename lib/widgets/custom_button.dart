@@ -1,3 +1,4 @@
+import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -20,8 +21,8 @@ class CustomButton extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         disabledForegroundColor: Colors.grey,
         side: BorderSide(
-          width: 2.0,
-          color: onPressed != null ? const Color(0xFF2B65F6) : Colors.grey,
+          width: 1.0,
+          color: onPressed != null ? mainBlue : Colors.grey,
         ),
         minimumSize: const Size.fromHeight(50),
         backgroundColor: backgroundColor,
@@ -31,6 +32,7 @@ class CustomButton extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
+          fontWeight: FontWeight.bold,
           color: textColor,
         ),
       ),

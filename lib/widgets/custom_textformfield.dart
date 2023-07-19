@@ -1,3 +1,4 @@
+import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -55,8 +56,8 @@ class CustomTextFormField extends StatelessWidget {
   OutlineInputBorder focusedBorder() {
     return const OutlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.black,
-        width: 2,
+        color: mainBlue,
+        width: 0.5,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(8),
@@ -67,8 +68,8 @@ class CustomTextFormField extends StatelessWidget {
   OutlineInputBorder enabledBorder() {
     return const OutlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.black,
-        width: 2,
+        color: grayUhuy,
+        width: 0.5,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(8),
