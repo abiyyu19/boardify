@@ -19,10 +19,13 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   }
 
   _navigateHomeScreen() async {
+    print(client.auth.currentSession?.user);
+    print(client.auth.currentSession);
     await Future.delayed(
-        const Duration(milliseconds: 2000),
-        () => Navigator.pushReplacementNamed(context,
-            client.auth.currentSession != null ? '/homepage' : '/onboarding'));
+      const Duration(milliseconds: 2000),
+      () => Navigator.pushReplacementNamed(context,
+          client.auth.currentSession != null ? '/homepage' : '/onboarding'),
+    );
   }
 
   @override

@@ -1,14 +1,19 @@
 import 'package:boardify/pages/home/home_page.dart';
+import 'package:boardify/pages/login/login_page1.dart';
 import 'package:boardify/pages/onboarding/onboarding_page.dart';
-import 'package:boardify/pages/login/signin_page.dart';
-import 'package:boardify/pages/register/signup_page.dart';
+import 'package:boardify/pages/login/login_page.dart';
+import 'package:boardify/pages/register/register_page.dart';
 import 'package:boardify/pages/splash_screen.dart';
+import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Supabase Initialize
   await Supabase.initialize(
     url: 'https://foxthmkrsjgestkabrja.supabase.co',
     anonKey:
@@ -39,9 +44,10 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const SplashScreenPage(),
           '/onboarding': (context) => const OnBoardingPage(),
-          '/homepage': (context) => const HomePage(),
-          '/signin': (context) => const SignInPage(),
-          '/signup': (context) => const SignUpPage(),
+          '/homepage': (context) => HomePage(),
+          '/login': (context) => const LoginPage(),
+          '/login1': (context) => LoginPage1(),
+          '/signup': (context) => const RegisterPage(),
         },
       ),
     );

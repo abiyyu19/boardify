@@ -1,28 +1,25 @@
+import 'package:boardify/pages/login/handle_login.dart';
 import 'package:boardify/pages/login/header_login.dart';
-import 'package:boardify/pages/register/header_register.dart';
+import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:boardify/widgets/custom_button.dart';
 import 'package:boardify/widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _nameController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool _obscureText = true;
-  bool _obscureText2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +32,16 @@ class _SignUpPageState extends State<SignUpPage> {
         backgroundColor: Colors.white38,
       ),
       body: Form(
+        onChanged: () {
+          setState(() {});
+        },
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             largeGap,
 
-            const HeaderRegister(),
-
-            smallGap,
-
-            // Name Form
-            CustomTextFormField(
-              label: "Nama",
-              controller: _nameController,
-            ),
+            const HeaderLogin(),
 
             smallGap,
 
@@ -74,46 +66,61 @@ class _SignUpPageState extends State<SignUpPage> {
                   color: Theme.of(context).primaryColorDark,
                 ),
                 onPressed: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-              ),
-            ),
-
-            smallGap,
-
-            // Confirm Password
-            CustomTextFormField(
-              label: 'Confirm Password',
-              controller: _confirmPasswordController,
-              inputType: TextInputType.visiblePassword,
-              obsecureText: _obscureText2,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _obscureText2 ? Icons.visibility : Icons.visibility_off,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _obscureText2 = !_obscureText2;
-                  });
+                  setState(
+                    () {
+                      _obscureText = !_obscureText;
+                    },
+                  );
                 },
               ),
             ),
 
             largeGap,
 
-            // Daftar Button
+            // Masuk Button
             CustomButton(
-              text: "Daftar",
-              onPressed: () => {},
+              text: "Masuk",
+              onPressed: (_emailController.text.isNotEmpty &&
+                      _passwordController.text.isNotEmpty)
+                  ? () {
+                      handleLogin(
+                        context,
+                        _emailController.text,
+                        _passwordController.text,
+                      );
+                    }
+                  : null,
               textColor: Colors.white,
-              backgroundColor: const Color(0xFF2B65F6),
+              backgroundColor: mainBlue,
             ),
+
+            // Don't Have an Account?
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Belum Punya akun?',
+                  style: TextStyle(
+                      fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () => {
+                    Navigator.pushNamed(context, '/signup'),
+                  },
+                  child: const Text('Daftar!'),
+                )
+              ],
+            )
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

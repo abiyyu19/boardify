@@ -4,13 +4,13 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
-    required this.onPressed,
     required this.textColor,
+    this.onPressed,
     this.backgroundColor,
   });
 
   final String text;
-  final Function() onPressed;
+  final Function()? onPressed;
   final Color? backgroundColor;
   final Color textColor;
 
@@ -18,12 +18,15 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-          side: const BorderSide(
-            width: 2.0,
-            color: Color(0xFF2B65F6),
-          ),
-          minimumSize: const Size.fromHeight(50),
-          backgroundColor: backgroundColor),
+        disabledForegroundColor: Colors.grey,
+        side: BorderSide(
+          width: 2.0,
+          color: onPressed != null ? const Color(0xFF2B65F6) : Colors.grey,
+        ),
+        minimumSize: const Size.fromHeight(50),
+        backgroundColor: backgroundColor,
+        disabledBackgroundColor: Colors.grey,
+      ),
       onPressed: onPressed,
       child: Text(
         text,

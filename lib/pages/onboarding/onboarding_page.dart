@@ -32,7 +32,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               onPressed: () => {
                 Navigator.pushNamed(context, '/signup'),
               },
-              backgroundColor: const Color(0xFF2B65F6),
+              backgroundColor: mainBlue,
               textColor: Colors.white,
             ),
 
@@ -42,7 +42,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             CustomButton(
               text: "Masuk",
               onPressed: () => {
-                Navigator.pushNamed(context, '/signin'),
+                Navigator.pushNamed(context, '/login'),
               },
               textColor: Colors.black,
             ),
