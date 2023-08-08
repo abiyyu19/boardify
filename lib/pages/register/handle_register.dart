@@ -1,3 +1,4 @@
+import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../service/supabase_service.dart';
@@ -19,16 +20,28 @@ void handleRegister(BuildContext context, String nama, String email,
     );
   } else {
     loadingWidget(context);
-    signUpEmailAndPassword(email, password).then(
-      (value) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Register Berhasil"),
-          ),
-        );
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/login', ModalRoute.withName('/onboarding'));
-        // Navigator.pushReplacementNamed(context, '/login');
+    signUpEmailAndPassword(email, password, nama).then(
+      (value) async {
+        if (value) {
+          // await client.from('users').insert({
+          //   'name': nama,
+          // });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Register Berhasil"),
+            ),
+          );
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/login', ModalRoute.withName('/onboarding'));
+          // Navigator.pushReplacementNamed(context, '/login');
+        } else {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Email Sudah digunakan"),
+            ),
+          );
+        }
       },
     );
   }

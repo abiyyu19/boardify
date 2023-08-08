@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Supabase Client
 final client = Supabase.instance.client;
-
-final getIt = GetIt.instance;
 
 abstract class Constants {
   static const String supabaseUrl = String.fromEnvironment(
@@ -22,6 +19,11 @@ abstract class Constants {
 // Colors
 const mainBlue = Color(0xFF1DA1F2);
 const grayUhuy = Color(0xFF919191);
+
+// Mini Gap
+const miniGap = SizedBox(
+  height: 10,
+);
 
 // Small Gap
 const smallGap = SizedBox(

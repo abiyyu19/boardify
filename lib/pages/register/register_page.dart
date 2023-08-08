@@ -132,53 +132,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // Future<dynamic> loadingWidget(BuildContext context) {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return const SpinKitCircle(
-  //         size: 100,
-  //         color: mainBlue,
-  //       );
-  //     },
-  //   );
-  // }
-
-  // void handleRegister() {
-  //   if (_passwordController.text != _confirmPasswordController.text) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Password harus sama"),
-  //       ),
-  //     );
-  //   } else if (_passwordController.text.length < 6 &&
-  //       _confirmPasswordController.text.length < 6) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Password harus terdiri dari 6 karakter"),
-  //       ),
-  //     );
-  //   } else {
-  //     loadingWidget(context);
-  //     signUpEmailAndPassword(_emailController.text, _passwordController.text)
-  //         .then(
-  //       (value) {
-  //         setState(() {
-  //           _isLoading = false;
-  //         });
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(
-  //             content: Text("Register Berhasil"),
-  //           ),
-  //         );
-  //         Navigator.pushNamedAndRemoveUntil(
-  //             context, '/login', ModalRoute.withName('/onboarding'));
-  //         // Navigator.pushReplacementNamed(context, '/login');
-  //       },
-  //     );
-  //   }
-  // }
-
   @override
   void dispose() {
     _nameController.dispose();

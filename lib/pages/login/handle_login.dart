@@ -21,7 +21,7 @@ void handleLogin(BuildContext context, String email, String password) {
             ),
           );
           Navigator.pushNamedAndRemoveUntil(
-              context, '/homepage', ModalRoute.withName('/homepage'));
+              context, '/mainpage', ModalRoute.withName('/mainpage'));
         } else {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(

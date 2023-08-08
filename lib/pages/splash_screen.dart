@@ -25,7 +25,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     await Future.delayed(
       const Duration(milliseconds: 2000),
       () => Navigator.pushReplacementNamed(context,
-          client.auth.currentSession != null ? '/homepage' : '/onboarding'),
+          client.auth.currentSession != null ? '/mainpage' : '/onboarding'),
     );
   }
 

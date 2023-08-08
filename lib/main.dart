@@ -1,5 +1,5 @@
-import 'package:boardify/pages/home/home_page.dart';
 import 'package:boardify/pages/login/login_page1.dart';
+import 'package:boardify/pages/main_page.dart';
 import 'package:boardify/pages/onboarding/onboarding_page.dart';
 import 'package:boardify/pages/login/login_page.dart';
 import 'package:boardify/pages/register/register_page.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const SplashScreenPage(),
           '/onboarding': (context) => const OnBoardingPage(),
-          '/homepage': (context) => HomePage(),
+          '/mainpage': (context) => MainPage(),
           '/login': (context) => const LoginPage(),
           '/login1': (context) => LoginPage1(),
           '/signup': (context) => const RegisterPage(),
