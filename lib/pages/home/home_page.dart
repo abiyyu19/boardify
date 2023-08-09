@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => Navigator.pushNamed(context, '/addproject'),
           backgroundColor: mainBlue,
           elevation: 4,
           child: const Icon(CupertinoIcons.add),

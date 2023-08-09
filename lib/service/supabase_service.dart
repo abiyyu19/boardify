@@ -1,11 +1,12 @@
-import 'dart:convert';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../models/project.dart';
 import '../utils/constant.dart';
 
-Future<bool> signInEmailAndPassword(String email, String password) async {
+User? user = client.auth.currentUser;
+
+Future<bool> signInEmailAndPassword(
+  String email,
+  String password,
+) async {
   try {
     final AuthResponse response = await client.auth.signInWithPassword(
       email: email,
@@ -32,7 +33,10 @@ Future<bool> signInEmailAndPassword(String email, String password) async {
 }
 
 Future<bool> signUpEmailAndPassword(
-    String email, String password, String name) async {
+  String email,
+  String password,
+  String name,
+) async {
   try {
     final AuthResponse response = await client.auth.signUp(
       email: email,
@@ -82,4 +86,21 @@ Future<List<dynamic>?> getProjectData() async {
     print(e.toString());
   }
   return null;
+}
+
+Future<void> insertProjectData(
+  String? name,
+  String? desc,
+  String? category,
+  String? prioriry,
+  String? deadline,
+) async {
+  await client.from('project').insert({
+    'project_name': name,
+    'description': desc,
+    'category': category,
+    'deadline': deadline,
+    'priority': prioriry,
+    'user_id': user?.id,
+  }).select();
 }

@@ -37,11 +37,15 @@ class CustomTextFormField extends StatelessWidget {
 
         // Form
         TextFormField(
+          minLines: 1,
+          maxLines: 5,
           obscureText: obsecureText ?? false,
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 2,
+              horizontal: 12,
+            ),
             enabledBorder: enabledBorder(),
             focusedBorder: focusedBorder(),
           ),

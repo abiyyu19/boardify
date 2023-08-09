@@ -19,6 +19,7 @@ abstract class Constants {
 // Colors
 const mainBlue = Color(0xFF1DA1F2);
 const grayUhuy = Color(0xFF919191);
+const grayLight = Color(0xFFE3E3E4);
 
 // Mini Gap
 const miniGap = SizedBox(
@@ -49,3 +50,7 @@ extension ShowSnackBar on BuildContext {
     );
   }
 }
+
+// Dropdown Menu Items
+const List<String> listCategory = <String>['Desain', 'Mobile', 'Penulisan'];
+const List<String> listPriority = <String>['Rendah', 'Sedang', 'Tinggi'];

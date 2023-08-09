@@ -2,11 +2,14 @@ import 'package:boardify/pages/login/login_page1.dart';
 import 'package:boardify/pages/main_page.dart';
 import 'package:boardify/pages/onboarding/onboarding_page.dart';
 import 'package:boardify/pages/login/login_page.dart';
+import 'package:boardify/pages/project/add_project.dart';
 import 'package:boardify/pages/register/register_page.dart';
 import 'package:boardify/pages/splash_screen.dart';
+import 'package:boardify/providers/app_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -32,23 +35,27 @@ class MyApp extends StatelessWidget {
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: MaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          textTheme:
-              GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+      child: ChangeNotifierProvider(
+        create: (context) => AppProviders(),
+        child: MaterialApp(
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            textTheme:
+                GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+          ),
+          debugShowCheckedModeBanner: false,
+          title: 'Boardify',
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const SplashScreenPage(),
+            '/onboarding': (context) => const OnBoardingPage(),
+            '/mainpage': (context) => MainPage(),
+            '/login': (context) => const LoginPage(),
+            '/login1': (context) => LoginPage1(),
+            '/signup': (context) => const RegisterPage(),
+            '/addproject': (context) => const AddProject(),
+          },
         ),
-        debugShowCheckedModeBanner: false,
-        title: 'Boardify',
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const SplashScreenPage(),
-          '/onboarding': (context) => const OnBoardingPage(),
-          '/mainpage': (context) => MainPage(),
-          '/login': (context) => const LoginPage(),
-          '/login1': (context) => LoginPage1(),
-          '/signup': (context) => const RegisterPage(),
-        },
       ),
     );
   }

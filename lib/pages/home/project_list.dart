@@ -24,21 +24,41 @@ class _ProjectListState extends State<ProjectList> {
     return FutureBuilder(
       future: getProjectData(),
       builder: (context, AsyncSnapshot snapshot) {
+        print(snapshot.data);
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) => ProjectCard(
-              category: snapshot.data[index]['category'],
-              title: snapshot.data[index]['project_name'],
-              deadline: DateTime.parse(snapshot.data[index]['deadline']),
-              priority: snapshot.data[index]['priority'],
-              taskDone: 8,
-              totalTask: 10,
-              onPressed: () => {},
-            ),
-          );
+          if (snapshot.data.length == 0) {
+            return Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.05,
+              ),
+              child: const Center(
+                child: Text(
+                  'Anda Belum Memiliki Proyek',
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: grayUhuy,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) => ProjectCard(
+                category: snapshot.data[index]['category'],
+                title: snapshot.data[index]['project_name'],
+                deadline: DateTime.parse(snapshot.data[index]['deadline']),
+                priority: snapshot.data[index]['priority'],
+                taskDone: 8,
+                totalTask: 10,
+                onPressed: () => {},
+              ),
+            );
+          }
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return Padding(
             padding: EdgeInsets.only(
