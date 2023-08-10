@@ -11,13 +11,17 @@ class AppProviders with ChangeNotifier {
     notifyListeners();
   }
 
+  // Add Task Value
+
   String? _categoryValue;
   String? _priorityValue;
   String? _dateInput;
+  String? _statusValue;
 
   String? get categoryValue => _categoryValue;
   String? get priorityValue => _priorityValue;
   String? get dateInput => _dateInput;
+  String? get statusValue => _statusValue;
 
   void changeCategoryValue(String value) {
     _categoryValue = value;
@@ -34,6 +38,24 @@ class AppProviders with ChangeNotifier {
   void changeDateInput(String value) {
     _dateInput = value;
     print(value);
+    notifyListeners();
+  }
+
+  void changeStatusValue(String value) {
+    _statusValue = value;
+    print(value);
+    notifyListeners();
+  }
+
+  // Project ID
+
+  int? _projectId;
+
+  int? get projectId => _projectId;
+
+  void changeProjectId(int id) {
+    _projectId = id;
+    // print(projectId);
     notifyListeners();
   }
 }

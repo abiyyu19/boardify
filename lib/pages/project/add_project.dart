@@ -25,89 +25,89 @@ class _AddProjectState extends State<AddProject> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            iconTheme: const IconThemeData(
-              color: Colors.black,
-            ),
-            centerTitle: true,
-            title: const Text(
-              "Tambah Proyek",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            elevation: 0,
-            backgroundColor: Colors.white,
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.black,
           ),
-          body: Consumer<AppProviders>(
-            builder: (context, value, _) => Form(
-              onChanged: () => setState(() {}),
-              key: _formKey,
-              child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                children: [
-                  smallGap,
-
-                  // Project Name
-                  CustomTextFormField(
-                    label: 'Nama Proyek',
-                    controller: _nameController,
-                  ),
-
-                  smallGap,
-
-                  // Project Description
-                  CustomTextFormField(
-                    label: 'Deskripsi Proyek',
-                    controller: _descriptionController,
-                  ),
-                  smallGap,
-
-                  const SelectorField(),
-
-                  largeGap,
-
-                  CustomButton(
-                    text: 'OK',
-                    textColor: Colors.white,
-                    backgroundColor: mainBlue,
-                    onPressed: () {
-                      const LoadingPage();
-                      print(value.categoryValue);
-                      print(value.priorityValue);
-                      print(value.dateInput);
-
-                      insertProjectData(
-                        _nameController.text,
-                        _descriptionController.text,
-                        value.categoryValue,
-                        value.priorityValue,
-                        value.dateInput,
-                      ).then(
-                        (value) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Berhasil Menambahkan Proyek"),
-                            ),
-                          );
-                          Navigator.pop(context);
-                          // Navigator.pushNamedAndRemoveUntil(
-                          //   context,
-                          //   '/login',
-                          //   ModalRoute.withName('/onboarding'),
-                          // );
-                          // Navigator.pushReplacementNamed(context, '/login');
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
+          centerTitle: true,
+          title: const Text(
+            "Tambah Proyek",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-          )),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
+        body: Consumer<AppProviders>(
+          builder: (context, addProject, _) => Form(
+            onChanged: () => setState(() {}),
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+              children: [
+                smallGap,
+
+                // Project Name
+                CustomTextFormField(
+                  label: 'Nama Proyek',
+                  controller: _nameController,
+                ),
+
+                smallGap,
+
+                // Project Description
+                CustomTextFormField(
+                  label: 'Deskripsi Proyek',
+                  controller: _descriptionController,
+                ),
+                smallGap,
+
+                const SelectorField(),
+
+                largeGap,
+
+                CustomButton(
+                  text: 'OK',
+                  textColor: Colors.white,
+                  backgroundColor: mainBlue,
+                  onPressed: (_nameController.text.isNotEmpty &&
+                          _descriptionController.text.isNotEmpty)
+                      ? () {
+                          const LoadingPage();
+                          insertProjectData(
+                            _nameController.text,
+                            _descriptionController.text,
+                            addProject.categoryValue,
+                            addProject.priorityValue,
+                            addProject.dateInput,
+                          ).then(
+                            (value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Berhasil Menambahkan Proyek"),
+                                ),
+                              );
+                              Navigator.pop(context);
+                            },
+                          );
+                        }
+                      : null,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 }

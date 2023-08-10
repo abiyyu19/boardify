@@ -3,6 +3,7 @@ import 'package:boardify/pages/main_page.dart';
 import 'package:boardify/pages/onboarding/onboarding_page.dart';
 import 'package:boardify/pages/login/login_page.dart';
 import 'package:boardify/pages/project/add_project.dart';
+import 'package:boardify/pages/project/project_detail.dart';
 import 'package:boardify/pages/register/register_page.dart';
 import 'package:boardify/pages/splash_screen.dart';
 import 'package:boardify/providers/app_providers.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
             '/login1': (context) => LoginPage1(),
             '/signup': (context) => const RegisterPage(),
             '/addproject': (context) => const AddProject(),
+            '/projectdetail': (context) => const ProjectDetail(),
           },
         ),
       ),

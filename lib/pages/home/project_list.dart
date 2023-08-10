@@ -2,7 +2,9 @@ import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:boardify/widgets/loading_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/app_providers.dart';
 import '../../widgets/project_card.dart';
 
 class ProjectList extends StatefulWidget {
@@ -44,18 +46,31 @@ class _ProjectListState extends State<ProjectList> {
               ),
             );
           } else {
-            return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) => ProjectCard(
-                category: snapshot.data[index]['category'],
-                title: snapshot.data[index]['project_name'],
-                deadline: DateTime.parse(snapshot.data[index]['deadline']),
-                priority: snapshot.data[index]['priority'],
-                taskDone: 8,
-                totalTask: 10,
-                onPressed: () => {},
+            return Consumer(
+              builder: (context, projectDetail, _) => ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) => ProjectCard(
+                  category: snapshot.data[index]['category'],
+                  title: snapshot.data[index]['project_name'],
+                  deadline: DateTime.parse(snapshot.data[index]['deadline']),
+                  priority: snapshot.data[index]['priority'],
+                  taskDone: 8,
+                  totalTask: 10,
+                  onPressed: () {
+                    context
+                        .read<AppProviders>()
+                        .changeProjectId(snapshot.data[index]['id_project']);
+                    Navigator.pushNamed(
+                      context,
+                      '/projectdetail',
+                      arguments: {
+                        'project_id': snapshot.data[index]['id_project']
+                      },
+                    );
+                  },
+                ),
               ),
             );
           }

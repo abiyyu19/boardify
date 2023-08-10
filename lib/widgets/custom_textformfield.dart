@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
-    required this.label,
+    this.label,
     required this.controller,
     this.inputType,
     this.obsecureText,
     this.suffixIcon,
   });
 
-  final String label;
+  final String? label;
   final TextEditingController controller;
   final TextInputType? inputType;
   final bool? obsecureText;
@@ -25,20 +25,21 @@ class CustomTextFormField extends StatelessWidget {
         // Label
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
+          child: Visibility(
+            visible: label != null ? true : false,
+            child: Text(
+              label ?? 'Judul',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
 
         // Form
         TextFormField(
-          minLines: 1,
-          maxLines: 5,
           obscureText: obsecureText ?? false,
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
@@ -51,7 +52,6 @@ class CustomTextFormField extends StatelessWidget {
           ),
           keyboardType: inputType ?? TextInputType.text,
           controller: controller,
-          style: const TextStyle(fontFamily: 'OpenSans'),
         ),
       ],
     );
@@ -61,7 +61,7 @@ class CustomTextFormField extends StatelessWidget {
     return const OutlineInputBorder(
       borderSide: BorderSide(
         color: mainBlue,
-        width: 0.5,
+        width: 1,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(8),
@@ -73,7 +73,7 @@ class CustomTextFormField extends StatelessWidget {
     return const OutlineInputBorder(
       borderSide: BorderSide(
         color: grayUhuy,
-        width: 0.5,
+        width: 1,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(8),

@@ -88,6 +88,21 @@ Future<List<dynamic>?> getProjectData() async {
   return null;
 }
 
+Future<List<dynamic>?> getOneProject(int? id) async {
+  try {
+    final data = await client.from('project').select('*').eq('id_project', id);
+
+    if (data != null) {
+      print(data);
+      return data;
+    }
+    return null;
+  } catch (e) {
+    print(e.toString());
+  }
+  return null;
+}
+
 Future<void> insertProjectData(
   String? name,
   String? desc,
@@ -102,5 +117,40 @@ Future<void> insertProjectData(
     'deadline': deadline,
     'priority': prioriry,
     'user_id': user?.id,
+  });
+}
+
+Future<List<dynamic>?> getTask(int? id) async {
+  try {
+    final data = await client
+        .from('task')
+        .select('*')
+        .eq('id_project', id)
+        .order('id_project', ascending: true);
+
+    if (data != null) {
+      // print(data[0]['deadline']);
+      return data;
+    }
+    return null;
+  } catch (e) {
+    print(e.toString());
+  }
+  return null;
+}
+
+Future<void> insertNewTask(
+  String? name,
+  String? deadline,
+  String? status,
+  int? projectId,
+) async {
+  final List<Map<String, dynamic>> data = await client.from('task').insert({
+    'task_name': name,
+    'deadline': deadline,
+    'status': status,
+    'id_project': projectId,
   }).select();
+
+  print(data);
 }

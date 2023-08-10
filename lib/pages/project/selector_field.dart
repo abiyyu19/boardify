@@ -1,9 +1,11 @@
 import 'package:boardify/utils/constant.dart';
+import 'package:boardify/widgets/custom_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/app_providers.dart';
+import '../../widgets/selector_form_field.dart';
 
 class SelectorField extends StatefulWidget {
   const SelectorField({super.key});
@@ -20,21 +22,34 @@ class _SelectorFieldState extends State<SelectorField> {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, value, _) => Row(
+      builder: (context, addTask, _) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Category Dropdown
-          selectorFormField(
-            'Kategori',
-            categoryValue,
-            (String? value) {
-              setState(() {
-                categoryValue = value!;
-                context.read<AppProviders>().changeCategoryValue(value);
-              });
-            },
-            listCategory,
+          Flexible(
+            child: Column(
+              children: [
+                const Text(
+                  'Prioritas',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                miniGap,
+                SelectorFormField(
+                  dropdownValue: categoryValue,
+                  list: listCategory,
+                  onChanged: (String? value) {
+                    categoryValue = value!;
+                    context.read<AppProviders>().changeCategoryValue(value);
+                  },
+                ),
+              ],
+            ),
           ),
+
           const SizedBox(
             width: 5,
           ),
@@ -52,39 +67,9 @@ class _SelectorFieldState extends State<SelectorField> {
                   ),
                 ),
                 miniGap,
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: DateTime.now().toString(),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 0.1,
-                      horizontal: 4,
-                    ),
-                    suffixIcon: _dateInput.text.isEmpty
-                        ? Icon(
-                            Icons.calendar_today,
-                            size: MediaQuery.of(context).size.width * 0.05,
-                          )
-                        : null,
-                    labelStyle: const TextStyle(
-                      fontSize: 12,
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: grayUhuy,
-                        width: 0.5,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                    ),
-                  ),
-                  readOnly: true,
-                  controller: _dateInput,
-                  onTap: () async {
+                CustomDatePicker(
+                  dateInputController: _dateInput,
+                  ontap: () async {
                     DateTime? pickedDate = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
@@ -102,7 +87,9 @@ class _SelectorFieldState extends State<SelectorField> {
                             .read<AppProviders>()
                             .changeDateInput(_dateInput.text);
                       });
-                    } else {}
+                    } else {
+                      print('hehe');
+                    }
                   },
                 ),
               ],
@@ -113,74 +100,29 @@ class _SelectorFieldState extends State<SelectorField> {
           ),
 
           // Priority Dropdown
-          selectorFormField(
-            'Prioritas',
-            priorityValue,
-            (String? value) {
-              setState(() {
-                priorityValue = value!;
-                context.read<AppProviders>().changePriorityValue(value);
-              });
-            },
-            listPriority,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Flexible selectorFormField(
-    String title,
-    String dropdownValue,
-    void Function(String?)? onChanged,
-    List<String> list,
-  ) {
-    return Flexible(
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          miniGap,
-          DropdownButtonFormField(
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 0.1,
-                horizontal: 8,
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: grayUhuy,
-                  width: 0.5,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
-                ),
-              ),
-            ),
-            elevation: 12,
-            borderRadius: BorderRadius.circular(12),
-            value: dropdownValue,
-            onChanged: onChanged,
-            items: list.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: grayUhuy,
+          Flexible(
+            child: Column(
+              children: [
+                const Text(
+                  'Prioritas',
+                  style: TextStyle(
                     fontSize: 12,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            }).toList(),
-          )
+                miniGap,
+                SelectorFormField(
+                  dropdownValue: priorityValue,
+                  list: listPriority,
+                  onChanged: (String? value) {
+                    priorityValue = value!;
+                    context.read<AppProviders>().changePriorityValue(value);
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
