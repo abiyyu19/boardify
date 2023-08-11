@@ -1,3 +1,4 @@
+import 'package:boardify/service/supabase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -38,8 +39,38 @@ class HeaderHomePage extends StatelessWidget {
         // Task Card
         Row(
           children: [
-            taskCard(context, 10, 'Belum dikerjakan'),
-            taskCard(context, 5, 'Dikerjakan'),
+            FutureBuilder(
+              future: getAllTaskWaiting(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  print(snapshot.data.length);
+                  return taskCard(
+                    context,
+                    snapshot.data.length,
+                    'Belum dikerjakan',
+                  );
+                } else {
+                  return Text('halo');
+                }
+              },
+            ),
+            FutureBuilder(
+              future: getAllTaskDoing(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  print(snapshot.data.length);
+                  return taskCard(
+                    context,
+                    snapshot.data.length,
+                    'Belum dikerjakan',
+                  );
+                } else {
+                  return Text('halo');
+                }
+              },
+            ),
           ],
         ),
         miniGap
@@ -47,7 +78,11 @@ class HeaderHomePage extends StatelessWidget {
     );
   }
 
-  Flexible taskCard(BuildContext context, int task, String title) {
+  Flexible taskCard(
+    BuildContext context,
+    int task,
+    String title,
+  ) {
     return Flexible(
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.16,
@@ -76,7 +111,7 @@ class HeaderHomePage extends StatelessWidget {
                           mainBlue,
                           BlendMode.srcIn,
                         ),
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        height: MediaQuery.of(context).size.height * 0.04,
                       ),
                     ),
                     Flexible(
@@ -84,7 +119,7 @@ class HeaderHomePage extends StatelessWidget {
                         title,
                         style: const TextStyle(
                             color: mainBlue,
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -98,7 +133,7 @@ class HeaderHomePage extends StatelessWidget {
                       TextSpan(
                         text: '$task',
                         style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -106,7 +141,7 @@ class HeaderHomePage extends StatelessWidget {
                         text: '  Tugas',
                         style: TextStyle(
                           color: grayUhuy,
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

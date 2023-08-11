@@ -35,14 +35,10 @@ class CustomDatePicker extends StatelessWidget {
             vertical: 0.1,
             horizontal: 4,
           ),
-          suffixIcon: isIcon != null
-              ? null
-              : dateInputController.text.isEmpty
-                  ? Icon(
-                      Icons.calendar_month,
-                      size: MediaQuery.of(context).size.width * 0.05,
-                    )
-                  : null,
+          suffixIcon: Icon(
+            Icons.calendar_month,
+            size: MediaQuery.of(context).size.width * 0.05,
+          ),
           labelStyle: const TextStyle(
             fontSize: 12,
           ),

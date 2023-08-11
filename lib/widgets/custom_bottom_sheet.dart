@@ -1,5 +1,7 @@
 import 'package:boardify/providers/app_providers.dart';
+import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
+import 'package:boardify/widgets/custom_alert_dialog.dart';
 import 'package:boardify/widgets/custom_textformfield.dart';
 import 'package:boardify/widgets/selector_form_field.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,8 @@ class CustomBottomSheet extends StatelessWidget {
     required this.firstValue,
     this.onChangedStatus,
     this.isIcon,
+    this.projectId,
+    this.onPressedAlertDialog,
   });
 
   final bool? visible;
@@ -30,6 +34,8 @@ class CustomBottomSheet extends StatelessWidget {
   final List<String> listStatus;
   final String firstValue;
   final bool? isIcon;
+  final int? projectId;
+  final Function()? onPressedAlertDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +72,7 @@ class CustomBottomSheet extends StatelessWidget {
             miniGap,
 
             // Task Name and Delete Button
-            nameAndDelete(),
+            nameAndDelete(context),
 
             Visibility(
               visible: visible == null ? true : false,
@@ -162,7 +168,7 @@ class CustomBottomSheet extends StatelessWidget {
     );
   }
 
-  Row nameAndDelete() {
+  Row nameAndDelete(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -182,7 +188,15 @@ class CustomBottomSheet extends StatelessWidget {
             ),
             color: Colors.red,
             alignment: Alignment.centerRight,
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => CustomAlertDialog(
+                  content: 'Apakah Anda yakin ingin menghapus tugas ini?',
+                  onPressed: onPressedAlertDialog,
+                ),
+              );
+            },
             icon: const Icon(
               Icons.delete,
             ),

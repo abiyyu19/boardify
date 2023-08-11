@@ -35,7 +35,7 @@ class AppProviders with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeDateInput(String value) {
+  void changeDateInput(String? value) {
     _dateInput = value;
     print(value);
     notifyListeners();

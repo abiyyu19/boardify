@@ -52,7 +52,16 @@ class _ProjectDetailState extends State<ProjectDetail> {
         backgroundColor: Colors.white,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/addproject',
+                arguments: {
+                  'project_id': projectId,
+                  'is_edit': true,
+                },
+              );
+            },
             icon: const Icon(Icons.edit),
           )
         ],
@@ -109,16 +118,112 @@ class _ProjectDetailState extends State<ProjectDetail> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) => TaskCard(
-                            title: snapshot.data[index]['task_name'],
-                            deadline: DateFormat.yMMMMd().format(
-                              DateTime.parse(
-                                snapshot.data[index]['deadline'],
+                          itemBuilder: (context, index) {
+                            return Consumer<AppProviders>(
+                              builder: (context, editTask, _) => TaskCard(
+                                title: snapshot.data[index]['task_name'],
+                                deadline: DateFormat.yMMMMd().format(
+                                  DateTime.parse(
+                                    snapshot.data[index]['deadline'],
+                                  ),
+                                ),
+                                status: snapshot.data[index]['status'],
+                                onPressed: () {
+                                  // showBottomSheet(
+                                  print(snapshot.data[index]['id_task']);
+                                  getOneTask(snapshot.data[index]['id_task'])
+                                      .then(
+                                    (value) {
+                                      _nameController.text =
+                                          value?[0]['task_name'];
+                                      _dateController.text =
+                                          value?[0]['deadline'];
+                                      showBottomSheet(
+                                        context: context,
+                                        builder: (context) => CustomBottomSheet(
+                                          projectId: projectId,
+                                          visible: true,
+                                          nameController: _nameController,
+                                          dateController: _dateController,
+                                          onTapDate: () async {
+                                            DateTime? pickedDate =
+                                                await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.parse(
+                                                value?[0]['deadline'],
+                                              ),
+                                              firstDate: DateTime(1950),
+                                              //DateTime.now() - not to allow to choose before today.
+                                              lastDate: DateTime(2100),
+                                            );
+
+                                            if (pickedDate != null) {
+                                              String formattedDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(pickedDate);
+
+                                              _dateController.text =
+                                                  formattedDate;
+                                            } else {
+                                              print('hehe');
+                                            }
+                                          },
+                                          listStatus: listStatus,
+                                          firstValue: value?[0]['status'],
+                                          onPressedAlertDialog: () {
+                                            setState(
+                                              () {
+                                                deleteTask(value?[0]['id_task'])
+                                                    .then(
+                                                  (value) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                          "Berhasil Menghapus Tugas",
+                                                        ),
+                                                      ),
+                                                    );
+                                                    Navigator.of(context).pop();
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          },
+                                          onPressedButton: () {
+                                            setState(
+                                              () {
+                                                handleEditTask(
+                                                  context,
+                                                  _nameController.text,
+                                                  _dateController.text,
+                                                  editTask.statusValue ??
+                                                      statusValue,
+                                                  projectId,
+                                                  value?[0]['id_task'],
+                                                );
+                                              },
+                                            );
+                                            _nameController.clear();
+                                            _dateController.clear();
+                                            statusValue = listStatus.first;
+                                          },
+                                          onChangedStatus: (String? value) {
+                                            statusValue = value!;
+                                            context
+                                                .read<AppProviders>()
+                                                .changeStatusValue(value);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
-                            ),
-                            status: snapshot.data[index]['status'],
-                            onPressed: () {},
-                          ),
+                            );
+                          },
                         );
                       }
                     } else {
@@ -167,11 +272,12 @@ class _ProjectDetailState extends State<ProjectDetail> {
                                 onPressedButton: () {
                                   setState(() {
                                     handleAddTask(
-                                        context,
-                                        _nameController.text,
-                                        _dateController.text,
-                                        addTask.statusValue,
-                                        projectId);
+                                      context,
+                                      _nameController.text,
+                                      _dateController.text,
+                                      addTask.statusValue ?? statusValue,
+                                      projectId,
+                                    );
                                   });
                                   _nameController.clear();
                                   _dateController.clear();
