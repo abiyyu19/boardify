@@ -44,26 +44,20 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             const HeaderRegister(),
-
             smallGap,
-
             // Name Form
             CustomTextFormField(
               label: "Nama",
               controller: _nameController,
             ),
-
             smallGap,
-
             // Email Form
             CustomTextFormField(
               controller: _emailController,
               label: "Email",
               inputType: TextInputType.emailAddress,
             ),
-
             smallGap,
-
             // Password Form
             CustomTextFormField(
               label: 'Password',
@@ -82,9 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
             ),
-
             smallGap,
-
             // Confirm Password
             CustomTextFormField(
               label: 'Confirm Password',
@@ -103,9 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
             ),
-
             largeGap,
-
             // Daftar Button
             CustomButton(
               text: "Daftar",

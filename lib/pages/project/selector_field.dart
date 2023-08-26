@@ -34,7 +34,7 @@ class _SelectorFieldState extends State<SelectorField> {
               child: Column(
                 children: [
                   const Text(
-                    'Prioritas',
+                    'Kategori',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -76,8 +76,7 @@ class _SelectorFieldState extends State<SelectorField> {
                     ontap: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.parse(project.dateInput!) ??
-                              DateTime.now(),
+                          initialDate: DateTime.parse(project.dateInput!),
                           firstDate: DateTime(1950),
                           //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2100));

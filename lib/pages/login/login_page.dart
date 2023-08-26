@@ -39,18 +39,14 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             const HeaderLogin(),
-
             smallGap,
-
             // Email Form
             CustomTextFormField(
               controller: _emailController,
               label: "Email",
               inputType: TextInputType.emailAddress,
             ),
-
             smallGap,
-
             // Password Form
             CustomTextFormField(
               label: 'Password',
@@ -71,9 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
             ),
-
             largeGap,
-
             // Masuk Button
             CustomButton(
               text: "Masuk",
@@ -90,7 +84,6 @@ class _LoginPageState extends State<LoginPage> {
               textColor: Colors.white,
               backgroundColor: mainBlue,
             ),
-
             // Don't Have an Account?
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

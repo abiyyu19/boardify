@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 class AppProviders with ChangeNotifier {
   int _pageIndex = 0;
@@ -15,13 +16,20 @@ class AppProviders with ChangeNotifier {
 
   String? _categoryValue;
   String? _priorityValue;
-  String? _dateInput;
+  String? _dateInput = DateFormat('yyyy-MM-dd').format(DateTime.now());
   String? _statusValue;
 
   String? get categoryValue => _categoryValue;
   String? get priorityValue => _priorityValue;
   String? get dateInput => _dateInput;
   String? get statusValue => _statusValue;
+
+  void removeAll() {
+    _categoryValue = '';
+    _priorityValue = '';
+    _dateInput = '';
+    notifyListeners();
+  }
 
   void changeCategoryValue(String value) {
     _categoryValue = value;

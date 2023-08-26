@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:boardify/models/project.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../utils/constant.dart';
 
@@ -16,6 +19,8 @@ Future<bool> signInEmailAndPassword(
     final userId = response.user?.id;
 
     if (userId != null) {
+      log('${response.session}');
+      log('${response.user}');
       return true;
     }
 
@@ -23,11 +28,9 @@ Future<bool> signInEmailAndPassword(
       throw const AuthException('Email/Password Salah');
     }
 
-    print(response.session);
-    print(response.user);
-
     return false;
   } catch (e) {
+    log(e.toString());
     return false;
   }
 }
@@ -48,10 +51,10 @@ Future<bool> signUpEmailAndPassword(
     );
 
     final userId = response.user?.id;
-    print(userId);
-    print(response.user);
 
     if (userId != null) {
+      log(userId);
+      log('${response.user}');
       return true;
     }
     if (userId == null) {
@@ -60,7 +63,7 @@ Future<bool> signUpEmailAndPassword(
 
     return false;
   } catch (e) {
-    print(e.toString());
+    log(e.toString());
     return false;
   }
 }
@@ -72,13 +75,13 @@ Future<void> signOut() async {
 
 Future<List<dynamic>?> getProjectData() async {
   try {
-    final data = await client
-        .from('project')
-        .select('*')
-        .order('id_project', ascending: true);
+    final data = await client.from('project').select(
+        '''*, task:id_project (*) ''').order('id_project', ascending: true);
 
     if (data != null) {
-      // print(data[0]['deadline']);
+      final project = Project.fromJson(data[0]);
+      // log(' haha ${project.projectName}');
+      // log('$data');
       return data;
     }
     return null;
@@ -93,12 +96,12 @@ Future<List<dynamic>?> getOneProject(int? id) async {
     final data = await client.from('project').select('*').eq('id_project', id);
 
     if (data != null) {
-      print(data);
+      log('satu proyek $data');
       return data;
     }
     return null;
   } catch (e) {
-    print(e.toString());
+    log(e.toString());
   }
   return null;
 }
@@ -176,7 +179,7 @@ Future<List<dynamic>?> getTask(int? id) async {
     }
     return null;
   } catch (e) {
-    print(e.toString());
+    log(e.toString());
   }
   return null;
 }
@@ -207,13 +210,34 @@ Future<List<dynamic>?> getAllTaskWaiting() async {
   try {
     final data = await client
         .from('task')
-        .select(
-          '*',
-        )
-        .eq('status', 'Menunggu');
+        .select('''*, project:id_project ( * )''')
+        .eq('status', 'Menunggu')
+        .is_('project:id_project', null)
+        .order('status_level', ascending: true)
+        .order('deadline', ascending: true);
 
     if (data != null) {
-      // print(data[0]['deadline']);
+      log('$data');
+      return data;
+    }
+    return null;
+  } catch (e) {
+    log(e.toString());
+  }
+  return null;
+}
+
+Future<List<dynamic>?> getAllTaskDoing() async {
+  try {
+    final data = await client
+        .from('task')
+        .select('''*, project:id_project ( * )''')
+        .eq('status', 'Dikerjakan')
+        .order('status_level', ascending: true)
+        .order('deadline', ascending: true);
+
+    if (data != null) {
+      log('$data');
       return data;
     }
     return null;
@@ -223,7 +247,7 @@ Future<List<dynamic>?> getAllTaskWaiting() async {
   return null;
 }
 
-Future<List<dynamic>?> getAllTaskDoing() async {
+Future<List<dynamic>?> getTaskDoneOneProject() async {
   try {
     final data = await client
         .from('task')
@@ -249,6 +273,7 @@ Future<List<dynamic>?> getOneTask(int? id) async {
 
     if (data != null) {
       // print(data[0]['deadline']);
+      // log('$data');
       return data;
     }
     return null;

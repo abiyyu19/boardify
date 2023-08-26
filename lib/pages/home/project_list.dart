@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:boardify/widgets/loading_page.dart';
@@ -26,7 +28,7 @@ class _ProjectListState extends State<ProjectList> {
     return FutureBuilder(
       future: getProjectData(),
       builder: (context, AsyncSnapshot snapshot) {
-        print(snapshot.data);
+        // print(snapshot.data);
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data.length == 0) {
@@ -47,29 +49,46 @@ class _ProjectListState extends State<ProjectList> {
             );
           } else {
             return Consumer(
-              builder: (context, projectDetail, _) => ListView.builder(
+              builder: (context, projectDetail, _) => ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: snapshot.data.length,
-                itemBuilder: (context, index) => ProjectCard(
-                  category: snapshot.data[index]['category'],
-                  title: snapshot.data[index]['project_name'],
-                  deadline: DateTime.parse(snapshot.data[index]['deadline']),
-                  priority: snapshot.data[index]['priority'],
-                  taskDone: 8,
-                  totalTask: 10,
-                  onPressed: () {
-                    context
-                        .read<AppProviders>()
-                        .changeProjectId(snapshot.data[index]['id_project']);
-                    Navigator.pushNamed(
-                      context,
-                      '/projectdetail',
-                      arguments: {
-                        'project_id': snapshot.data[index]['id_project']
-                      },
-                    );
-                  },
+                itemBuilder: (context, index) {
+                  // log('elah ${snapshot.data}');
+
+                  int count = 0;
+
+                  // log('pesan dariku ${snapshot.data.length}');
+                  for (var item in snapshot.data[index]['task']) {
+                    if (item['status_level'] == 3) {
+                      count++;
+                    }
+                  }
+                  log('masuk gak sih $count');
+
+                  return ProjectCard(
+                    category: snapshot.data[index]['category'],
+                    title: snapshot.data[index]['project_name'],
+                    deadline: DateTime.parse(snapshot.data[index]['deadline']),
+                    priority: snapshot.data[index]['priority'],
+                    taskDone: count,
+                    totalTask: (snapshot.data[index]['task']).length,
+                    onPressed: () {
+                      context
+                          .read<AppProviders>()
+                          .changeProjectId(snapshot.data[index]['id_project']);
+                      Navigator.pushNamed(
+                        context,
+                        '/projectdetail',
+                        arguments: {
+                          'project_id': snapshot.data[index]['id_project']
+                        },
+                      );
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 8,
                 ),
               ),
             );

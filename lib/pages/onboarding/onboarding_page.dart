@@ -1,6 +1,5 @@
 import 'package:boardify/utils/constant.dart';
 import 'package:flutter/material.dart';
-
 import '../../widgets/custom_button.dart';
 import 'header_onboarding.dart';
 
@@ -20,14 +19,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           padding: const EdgeInsets.all(20.0),
           children: [
             largeGap,
-
             // Header
             const HeaderOnboarding(),
-
             largeGap,
             largeGap,
             smallGap,
-
             // Sign Up Button
             CustomButton(
               text: "Daftar",
@@ -37,9 +33,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               backgroundColor: mainBlue,
               textColor: Colors.white,
             ),
-
             smallGap,
-
             // Sign In Button
             CustomButton(
               text: "Masuk",

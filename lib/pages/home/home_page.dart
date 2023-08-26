@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:boardify/pages/home/header_home_page.dart';
 import 'package:boardify/pages/home/project_list.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,51 +16,48 @@ class HomePage extends StatelessWidget {
   final User? user = client.auth.currentUser;
   @override
   Widget build(BuildContext context) {
-    print(user?.userMetadata?["name"]);
-    print(user?.id);
+    log(user?.userMetadata?["name"]);
+    log('${user?.id}');
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           primary: false,
-          title: const Text(
+          title: Text(
             'Boardify',
-            style: TextStyle(
-              color: mainBlue,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.montserrat(
+              textStyle: const TextStyle(
+                color: mainBlue,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           elevation: 0,
           backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications),
-              color: mainBlue,
-            )
-          ],
         ),
         body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           children: [
             // Home Page Header
             HeaderHomePage(
               user: user,
             ),
-
             // Your Project
-            const Text(
-              'Proyek Kamu',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w900,
+            const Padding(
+              padding: EdgeInsets.only(left: 8),
+              child: Text(
+                'Proyek Kamu',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
-
+            // Gap between Your Project and Project List
             const SizedBox(
               height: 5,
             ),
-
+            // Project Listt
             const ProjectList(),
           ],
         ),

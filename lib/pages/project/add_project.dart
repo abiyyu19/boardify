@@ -89,7 +89,7 @@ class _AddProjectState extends State<AddProject> {
                                     ),
                                   ),
                                 );
-                                Navigator.pushNamed(context, '/homepage');
+                                Navigator.pushNamed(context, '/mainpage');
                               },
                             );
                           },
@@ -108,7 +108,6 @@ class _AddProjectState extends State<AddProject> {
         ),
         body: Consumer<AppProviders>(
           builder: (context, addProject, _) => Form(
-            // onChanged: () => setState(() {}),
             key: _formKey,
             child: ListView(
               padding: const EdgeInsets.symmetric(
@@ -117,26 +116,22 @@ class _AddProjectState extends State<AddProject> {
               ),
               children: [
                 smallGap,
-
                 // Project Name
                 CustomTextFormField(
                   label: 'Nama Proyek',
                   controller: _nameController,
                 ),
-
                 smallGap,
-
                 // Project Description
                 CustomTextFormField(
                   label: 'Deskripsi Proyek',
                   controller: _descriptionController,
                 ),
                 smallGap,
-
+                // Selector Field for Category, Deadline, and Priority
                 const SelectorField(),
-
                 largeGap,
-
+                // Add Button
                 CustomButton(
                   text: 'OK',
                   textColor: Colors.white,

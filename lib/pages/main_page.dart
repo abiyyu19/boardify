@@ -43,7 +43,7 @@ class MainPage extends StatelessWidget {
   final List<Widget> pageList = [
     HomePage(),
     const TaskPage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   List<BottomNavigationBarItem> get bottomNavigationBarItem {

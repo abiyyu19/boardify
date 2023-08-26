@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../utils/constant.dart';
 
 class SplashScreenPage extends StatefulWidget {
@@ -14,14 +13,11 @@ class SplashScreenPage extends StatefulWidget {
 class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _navigateHomeScreen();
   }
 
   _navigateHomeScreen() async {
-    print(client.auth.currentSession?.user);
-    print(client.auth.currentSession);
     await Future.delayed(
       const Duration(milliseconds: 2000),
       () => Navigator.pushReplacementNamed(context,

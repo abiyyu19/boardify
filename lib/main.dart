@@ -1,4 +1,3 @@
-import 'package:boardify/pages/login/login_page1.dart';
 import 'package:boardify/pages/main_page.dart';
 import 'package:boardify/pages/onboarding/onboarding_page.dart';
 import 'package:boardify/pages/login/login_page.dart';
@@ -13,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Supabase Initialize
@@ -52,7 +51,6 @@ class MyApp extends StatelessWidget {
             '/onboarding': (context) => const OnBoardingPage(),
             '/mainpage': (context) => MainPage(),
             '/login': (context) => const LoginPage(),
-            '/login1': (context) => LoginPage1(),
             '/signup': (context) => const RegisterPage(),
             '/addproject': (context) => const AddProject(),
             '/projectdetail': (context) => const ProjectDetail(),

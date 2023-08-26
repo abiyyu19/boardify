@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:boardify/service/supabase_service.dart';
+import 'package:boardify/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../utils/constant.dart';
@@ -15,43 +19,61 @@ class HeaderHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('$user');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         smallGap,
         // Greetings
-        Text(
-          'Selamat Pagi, ${user?.userMetadata?["name"]}',
-          style: const TextStyle(
-            fontSize: 15,
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Text(
+            'Selamat Pagi, ${user?.userMetadata?['name']}',
+            style: const TextStyle(
+              fontSize: 15,
+            ),
           ),
         ),
         const SizedBox(
           height: 5,
         ),
-        const Text(
-          'Tetap Semangat!',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        const Padding(
+          padding: EdgeInsets.only(left: 8),
+          child: Text(
+            'Tetap Semangat!',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
         ),
-
         miniGap,
-
         // Task Card
         Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FutureBuilder(
               future: getAllTaskWaiting(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
-                  print(snapshot.data.length);
+                  log('belum dikerjakan ${snapshot.data.length}');
                   return taskCard(
                     context,
                     snapshot.data.length,
                     'Belum dikerjakan',
                   );
                 } else {
-                  return Text('halo');
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey.withOpacity(0.5),
+                    highlightColor: Colors.grey.withOpacity(1.0),
+                    child: Row(
+                      children: [
+                        Skeleton(
+                          height: MediaQuery.of(context).size.height * 0.16,
+                          width: MediaQuery.of(context).size.width * 0.45,
+                        )
+                      ],
+                    ),
+                  );
                 }
               },
             ),
@@ -60,14 +82,25 @@ class HeaderHomePage extends StatelessWidget {
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
-                  print(snapshot.data.length);
+                  log('dikerjakan ${snapshot.data.length}');
                   return taskCard(
                     context,
                     snapshot.data.length,
-                    'Belum dikerjakan',
+                    'Dikerjakan',
                   );
                 } else {
-                  return Text('halo');
+                  return Row(
+                    children: [
+                      Shimmer.fromColors(
+                        baseColor: Colors.grey.withOpacity(0.5),
+                        highlightColor: Colors.grey.withOpacity(1.0),
+                        child: Skeleton(
+                          height: MediaQuery.of(context).size.height * 0.16,
+                          width: MediaQuery.of(context).size.width * 0.45,
+                        ),
+                      )
+                    ],
+                  );
                 }
               },
             ),

@@ -39,7 +39,7 @@ class ProjectCard extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.all(16),
           child: Row(
             children: [
               // Left Section
@@ -141,7 +141,13 @@ class ProjectCard extends StatelessWidget {
   }
 
   Flexible rightSection(BuildContext context) {
-    double percetage = (taskDone / totalTask);
+    double percetage;
+    if (totalTask == 0) {
+      percetage = 0;
+    } else {
+      percetage = (taskDone / totalTask);
+    }
+
     return Expanded(
       flex: 1,
       child: Column(
@@ -159,12 +165,20 @@ class ProjectCard extends StatelessWidget {
   }
 
   Text taskDoneTotal() {
-    return Text(
-      '$taskDone/$totalTask Tugas',
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    return (totalTask == 0)
+        ? const Text(
+            'Belum ada Tugas',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          )
+        : Text(
+            '$taskDone/$totalTask Tugas',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          );
   }
 
   Stack circularProgress(double percetage, BuildContext context) {
