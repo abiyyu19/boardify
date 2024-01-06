@@ -54,11 +54,46 @@ Future<bool> signUpEmailAndPassword(
 
     if (userId != null) {
       log(userId);
-      log('${response.user}');
+      log('masuk yang ini loh ${response.user}');
       return true;
     }
     if (userId == null) {
       throw const AuthException('Email sudah terdaftar');
+    }
+
+    return false;
+  } catch (e) {
+    log(e.toString());
+    return false;
+  }
+}
+
+Future<bool> editProfile(
+  String name,
+  String email,
+  String password,
+) async {
+  try {
+    final UserResponse response = await client.auth.updateUser(
+      UserAttributes(
+        email: email,
+        password: password,
+        data: {
+          'name': name,
+          'email': email,
+        },
+      ),
+    );
+
+    final userId = response.user?.id;
+
+    if (userId != null) {
+      log(userId);
+      log('masuk yang ini loh ${response.user}');
+      return true;
+    }
+    if (userId == null) {
+      throw const AuthException('ahahaha');
     }
 
     return false;
@@ -78,15 +113,17 @@ Future<List<dynamic>?> getProjectData() async {
     final data = await client.from('project').select(
         '''*, task:id_project (*) ''').order('id_project', ascending: true);
 
+    log('haha3');
+
     if (data != null) {
       final project = Project.fromJson(data[0]);
-      // log(' haha ${project.projectName}');
+      log('haha1 ${project.projectName}');
       // log('$data');
       return data;
     }
     return null;
   } catch (e) {
-    print(e.toString());
+    log(e.toString());
   }
   return null;
 }
@@ -212,12 +249,11 @@ Future<List<dynamic>?> getAllTaskWaiting() async {
         .from('task')
         .select('''*, project:id_project ( * )''')
         .eq('status', 'Menunggu')
-        .is_('project:id_project', null)
         .order('status_level', ascending: true)
         .order('deadline', ascending: true);
 
     if (data != null) {
-      log('$data');
+      log('haha2 $data');
       return data;
     }
     return null;

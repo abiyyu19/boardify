@@ -2,18 +2,25 @@ import 'dart:developer';
 
 import 'package:boardify/pages/home/header_home_page.dart';
 import 'package:boardify/pages/home/project_list.dart';
+import 'package:boardify/service/supabase_service.dart';
 import 'package:boardify/utils/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final Session? session = client.auth.currentSession;
 
   final User? user = client.auth.currentUser;
+
   @override
   Widget build(BuildContext context) {
     log(user?.userMetadata?["name"]);
@@ -58,11 +65,14 @@ class HomePage extends StatelessWidget {
               height: 5,
             ),
             // Project Listt
-            const ProjectList(),
+            ProjectList(
+              user: user,
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushNamed(context, '/addproject'),
+          onPressed: () => Navigator.pushNamed(context, '/addproject')
+              .then((_) => setState(() {})),
           backgroundColor: mainBlue,
           elevation: 4,
           child: const Icon(CupertinoIcons.add),

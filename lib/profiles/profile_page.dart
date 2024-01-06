@@ -1,15 +1,21 @@
 import 'dart:developer';
 import 'package:boardify/profiles/profile_content.dart';
 import 'package:boardify/utils/constant.dart';
+import 'package:boardify/widgets/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../service/supabase_service.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   final User? user = client.auth.currentUser;
 
   @override
@@ -35,8 +41,16 @@ class ProfilePage extends StatelessWidget {
           IconButton(
             alignment: Alignment.centerLeft,
             onPressed: () {
-              signOut().then(
-                (value) => Navigator.pushReplacementNamed(context, '/'),
+              showDialog(
+                context: context,
+                builder: (context) => CustomAlertDialog(
+                  content: 'Apakah Anda yakin ingin Keluar?',
+                  onPressed: () {
+                    signOut().then(
+                      (value) => Navigator.pushReplacementNamed(context, '/'),
+                    );
+                  },
+                ),
               );
             },
             icon: const Icon(
@@ -73,24 +87,28 @@ class ProfilePage extends StatelessWidget {
               information: user?.userMetadata?['email'],
             ),
             // Password Section
-            const ProfileContent(
-              title: 'Password',
-            ),
-            // Edit Button
-            ElevatedButton.icon(
-              icon: const Icon(Icons.edit),
-              label: Text(
-                'Edit',
-                style: GoogleFonts.montserrat(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(45),
-              ),
-            )
+            // const ProfileContent(
+            //   title: 'Password',
+            // ),
+            // // Edit Button
+            // ElevatedButton.icon(
+            //   icon: const Icon(Icons.edit),
+            //   label: Text(
+            //     'Edit',
+            //     style: GoogleFonts.montserrat(
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            //   onPressed:
+            //   () {
+            //     Navigator.pushNamed(context, '/editprofil')
+            //         .then((value) => setState(() {}));
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     minimumSize: const Size.fromHeight(45),
+            //   ),
+            // )
           ],
         ),
       ),

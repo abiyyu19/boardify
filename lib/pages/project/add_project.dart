@@ -52,120 +52,151 @@ class _AddProjectState extends State<AddProject> {
     });
 
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
-          centerTitle: true,
-          title: Text(
-            isEdit == true ? "Edit Proyek" : "Tambah Proyek",
-            style: const TextStyle(
+      child: WillPopScope(
+        onWillPop: () {
+          //trigger leaving and use own data
+          setState(() {
+            Navigator.pop(context);
+          });
+
+          //we need to return a future
+          return Future.value(false);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            iconTheme: const IconThemeData(
               color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
             ),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.white,
-          actions: [
-            Visibility(
-              visible: isEdit ?? false,
-              child: IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => CustomAlertDialog(
-                      content: 'Apakah Anda yakin ingin menghapus Proyek ini?',
-                      onPressed: () {
-                        setState(
-                          () {
-                            deleteProject(projectId).then(
-                              (value) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "Berhasil Menghapus Proyek",
+            centerTitle: true,
+            title: Text(
+              isEdit == true ? "Edit Proyek" : "Tambah Proyek",
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.white,
+            actions: [
+              Visibility(
+                visible: isEdit ?? false,
+                child: IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomAlertDialog(
+                        content:
+                            'Apakah Anda yakin ingin menghapus Proyek ini?',
+                        onPressed: () {
+                          setState(
+                            () {
+                              deleteProject(projectId).then(
+                                (value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Berhasil Menghapus Proyek",
+                                      ),
                                     ),
-                                  ),
-                                );
-                                Navigator.pushNamed(context, '/mainpage');
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  );
-                },
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-              ),
-            )
-          ],
-        ),
-        body: Consumer<AppProviders>(
-          builder: (context, addProject, _) => Form(
-            key: _formKey,
-            child: ListView(
-              padding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 20,
-              ),
-              children: [
-                smallGap,
-                // Project Name
-                CustomTextFormField(
-                  label: 'Nama Proyek',
-                  controller: _nameController,
-                ),
-                smallGap,
-                // Project Description
-                CustomTextFormField(
-                  label: 'Deskripsi Proyek',
-                  controller: _descriptionController,
-                ),
-                smallGap,
-                // Selector Field for Category, Deadline, and Priority
-                const SelectorField(),
-                largeGap,
-                // Add Button
-                CustomButton(
-                  text: 'OK',
-                  textColor: Colors.white,
-                  backgroundColor: mainBlue,
-                  onPressed: (_nameController.text.isNotEmpty &&
-                          _descriptionController.text.isNotEmpty)
-                      ? () {
-                          setState(() {
-                            (isEdit != null)
-                                ? handleEditProject(
-                                    context,
-                                    _nameController.text,
-                                    _descriptionController.text,
-                                    addProject.categoryValue,
-                                    addProject.priorityValue,
-                                    addProject.dateInput,
-                                    projectId,
-                                  )
-                                : handleAddProject(
-                                    context,
-                                    _nameController.text,
-                                    _descriptionController.text,
-                                    addProject.categoryValue ?? categoryValue,
-                                    addProject.priorityValue ?? priorityValue,
-                                    addProject.dateInput ??
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(DateTime.now())
-                                            .toString(),
                                   );
-                          });
-                        }
-                      : null,
+                                  context
+                                      .read<AppProviders>()
+                                      .changeCategoryValue(listCategory.first);
+                                  context
+                                      .read<AppProviders>()
+                                      .changePriorityValue(listPriority.first);
+
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(DateTime.now());
+                                  context
+                                      .read<AppProviders>()
+                                      .changeDateInput(formattedDate);
+                                  // Navigator.popUntil(context, (route) => false);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  // Navigator.pushNamed(context, '/mainpage');
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
                 ),
-              ],
+              )
+            ],
+          ),
+          body: Consumer<AppProviders>(
+            builder: (context, addProject, _) => Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 20,
+                ),
+                children: [
+                  smallGap,
+                  // Project Name
+                  CustomTextFormField(
+                    label: 'Nama Proyek',
+                    controller: _nameController,
+                  ),
+                  smallGap,
+                  // Project Description
+                  CustomTextFormField(
+                    label: 'Deskripsi Proyek',
+                    controller: _descriptionController,
+                  ),
+                  smallGap,
+                  // Selector Field for Category, Deadline, and Priority
+                  const SelectorField(),
+                  largeGap,
+                  // Add Button
+                  CustomButton(
+                    text: 'OK',
+                    textColor: Colors.white,
+                    backgroundColor: mainBlue,
+                    onPressed: (_nameController.text.isNotEmpty &&
+                            _descriptionController.text.isNotEmpty)
+                        ? () {
+                            setState(() {
+                              if (isEdit != null) {
+                                handleEditProject(
+                                  context,
+                                  _nameController.text,
+                                  _descriptionController.text,
+                                  addProject.categoryValue,
+                                  addProject.priorityValue,
+                                  addProject.dateInput,
+                                  projectId,
+                                );
+                              } else {
+                                handleAddProject(
+                                  context,
+                                  _nameController.text,
+                                  _descriptionController.text,
+                                  addProject.categoryValue ?? categoryValue,
+                                  addProject.priorityValue ?? priorityValue,
+                                  addProject.dateInput ??
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(DateTime.now())
+                                          .toString(),
+                                );
+                              }
+                            });
+                          }
+                        : null,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

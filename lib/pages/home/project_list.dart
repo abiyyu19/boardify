@@ -5,24 +5,22 @@ import 'package:boardify/utils/constant.dart';
 import 'package:boardify/widgets/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../providers/app_providers.dart';
 import '../../widgets/project_card.dart';
 
 class ProjectList extends StatefulWidget {
-  const ProjectList({super.key});
+  const ProjectList({super.key, this.user});
+
+  final User? user;
 
   @override
   State<ProjectList> createState() => _ProjectListState();
 }
 
 class _ProjectListState extends State<ProjectList> {
-  @override
-  void initState() {
-    super.initState();
-    getProjectData();
-  }
-
+  // @override
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -83,7 +81,7 @@ class _ProjectListState extends State<ProjectList> {
                         arguments: {
                           'project_id': snapshot.data[index]['id_project']
                         },
-                      );
+                      ).then((_) => setState(() {}));
                     },
                   );
                 },

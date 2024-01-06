@@ -5,6 +5,7 @@ import 'package:boardify/pages/project/add_project.dart';
 import 'package:boardify/pages/project/project_detail.dart';
 import 'package:boardify/pages/register/register_page.dart';
 import 'package:boardify/pages/splash_screen.dart';
+import 'package:boardify/profiles/edit_profil.dart';
 import 'package:boardify/providers/app_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
             '/signup': (context) => const RegisterPage(),
             '/addproject': (context) => const AddProject(),
             '/projectdetail': (context) => const ProjectDetail(),
+            '/editprofil': (context) => const EditProfile(),
           },
         ),
       ),

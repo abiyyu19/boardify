@@ -39,7 +39,9 @@ class _ProjectDetailState extends State<ProjectDetail> {
     return WillPopScope(
       onWillPop: () {
         //trigger leaving and use own data
-        Navigator.pop(context, false);
+        setState(() {
+          Navigator.pop(context);
+        });
 
         //we need to return a future
         return Future.value(false);
@@ -70,7 +72,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                     'project_id': projectId,
                     'is_edit': true,
                   },
-                );
+                ).then((value) => setState(() {}));
               },
               icon: const Icon(Icons.edit),
             )
